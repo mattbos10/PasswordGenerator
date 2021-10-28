@@ -147,4 +147,33 @@ generateEl.addEventListener(`click`, () => {
   const length = parseInt(lengthEl.value);
 
   console.log(hasLower, hasUpper, hasNumber, hasSymbol, length);
+
+  // The generatePassword function takes the true/false values determined by the checkboxes as well as the number from the number input as arguments and returns a string (AKA the password) which is set as the innerText value for the "result" (AKA Span) element
+  resultEl.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, length);
+});
+
+// COPY PASSWORD TO CLIPBOARD
+clipboardEl.addEventListener(`click`, () => {
+  const textArea = document.createElement(`textarea`);
+  const password = resultEl.innerText;
+
+  // If user clicks clipboard while no password is displayed the function will end and nothing will be copied to the clipboard
+  if (password === "") {
+    alert('Please generate a password first');
+    return;
+  }
+
+  // Setting the value for the textArea to the password that is currently being displayed
+  textArea.value = password;
+  // Selecting the body element
+  const body = document.querySelector(`body`);
+  // Adding the textarea to the webpage
+  body.append(textArea);
+  // Selecting the value inside the textarea
+  textArea.select();
+  // Copying the selected value
+  document.execCommand(`copy`);
+  // Removing the textarea element from the webpage/document
+  textArea.remove();
+  alert(`Password has been copied to the clipboard! Don't forget to store your password in a secure location :)`);
 });
